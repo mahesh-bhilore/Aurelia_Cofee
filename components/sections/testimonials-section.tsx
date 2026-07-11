@@ -1,5 +1,3 @@
-'use client';
-
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Quote } from 'lucide-react';
@@ -10,7 +8,7 @@ export function TestimonialsSection() {
 
   useEffect(() => {
     const timer = window.setInterval(() => {
-      setActiveIndex((current) => (current + 1) % testimonials.length);
+      setActiveIndex((c) => (c + 1) % testimonials.length);
     }, 4600);
     return () => window.clearInterval(timer);
   }, []);
@@ -18,56 +16,64 @@ export function TestimonialsSection() {
   const current = testimonials[activeIndex];
 
   return (
-    <section id="testimonials" className="border-b border-white/10 px-6 py-24 sm:px-10 lg:px-20">
-      <div className="mx-auto max-w-7xl rounded-[2.5rem] border border-white/10 bg-gradient-to-br from-white/8 to-transparent p-8 shadow-luxe backdrop-blur-xl sm:p-12">
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+    <section id="testimonials" className="border-b border-white/10 px-5 py-16 sm:px-10 sm:py-20 lg:px-20 lg:py-24">
+      <div className="mx-auto max-w-7xl rounded-2xl border border-white/10 bg-gradient-to-br from-white/8 to-transparent p-5 shadow-luxe backdrop-blur-xl sm:rounded-[2.5rem] sm:p-8 lg:p-12">
+
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-2xl">
-            <p className="text-[0.7rem] font-semibold uppercase tracking-[0.35em] text-gold/90">Testimonials</p>
-            <h2 className="mt-3 font-display text-3xl text-pearl sm:text-4xl">The kind of praise one hears in hushed velvet rooms.</h2>
+            <p className="text-[0.65rem] font-semibold uppercase tracking-[0.35em] text-gold/90">Testimonials</p>
+            <h2 className="mt-2 font-display text-2xl text-pearl sm:mt-3 sm:text-3xl lg:text-4xl">The kind of praise one hears in hushed velvet rooms.</h2>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-2.5">
             {testimonials.map((item, index) => (
               <button
                 key={item.name}
                 type="button"
                 onClick={() => setActiveIndex(index)}
-                className={`h-2.5 rounded-full transition-all ${index === activeIndex ? 'w-12 bg-gold' : 'w-2.5 bg-white/20'}`}
+                className={`h-2 rounded-full transition-all duration-300 ${index === activeIndex ? 'w-10 bg-gold' : 'w-2 bg-white/20'}`}
                 aria-label={`Show testimonial ${index + 1}`}
               />
             ))}
           </div>
         </div>
-        <div className="mt-12 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+
+        <div className="mt-8 grid gap-4 sm:mt-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-6">
           <AnimatePresence mode="wait">
             <motion.div
               key={current.name}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
-              className="rounded-[2rem] border border-white/10 bg-black/30 p-8"
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.45 }}
+              className="rounded-xl border border-white/10 bg-black/30 p-5 sm:rounded-[2rem] sm:p-8"
             >
-              <Quote className="h-8 w-8 text-gold" />
-              <p className="mt-6 text-xl leading-9 text-pearl/80 sm:text-2xl">“{current.quote}”</p>
-              <div className="mt-8">
-                <p className="font-semibold text-pearl">{current.name}</p>
-                <p className="text-sm text-pearl/60">{current.role}</p>
+              <Quote className="h-6 w-6 text-gold sm:h-8 sm:w-8" />
+              <p className="mt-4 font-display text-base leading-8 text-pearl/80 sm:mt-6 sm:text-xl sm:leading-9 lg:text-2xl">"{current.quote}"</p>
+              <div className="mt-5 sm:mt-8">
+                <p className="text-sm font-semibold text-pearl">{current.name}</p>
+                <p className="text-xs text-pearl/60">{current.role}</p>
               </div>
             </motion.div>
           </AnimatePresence>
-          <div className="flex flex-col gap-4">
+
+          <div className="flex flex-row gap-3 overflow-x-auto pb-1 lg:flex-col lg:overflow-visible lg:pb-0">
             {testimonials.map((item, index) => (
-              <motion.div
+              <motion.button
                 key={item.name}
-                whileHover={{ y: -4, scale: 1.01 }}
-                className={`rounded-[1.5rem] border p-5 backdrop-blur-xl ${index === activeIndex ? 'border-gold/40 bg-gold/10' : 'border-white/10 bg-white/5'}`}
+                type="button"
+                onClick={() => setActiveIndex(index)}
+                whileHover={{ scale: 1.02 }}
+                className={`min-w-[160px] flex-shrink-0 rounded-xl border p-4 text-left backdrop-blur-xl transition-all duration-300 sm:min-w-[180px] lg:min-w-0 lg:rounded-[1.5rem] lg:p-5 ${
+                  index === activeIndex ? 'border-gold/40 bg-gold/10' : 'border-white/10 bg-white/5'
+                }`}
               >
-                <p className="text-sm uppercase tracking-[0.3em] text-gold/80">{item.role}</p>
-                <p className="mt-3 text-lg text-pearl">{item.name}</p>
-              </motion.div>
+                <p className="text-[0.6rem] uppercase tracking-[0.3em] text-gold/80">{item.role}</p>
+                <p className="mt-2 text-sm text-pearl lg:text-base">{item.name}</p>
+              </motion.button>
             ))}
           </div>
         </div>
+
       </div>
     </section>
   );
